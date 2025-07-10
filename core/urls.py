@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProjectViewSet, RegisterUserView, UserDetailView, TaskListCreateView, TaskDetailView, CommentViewSet
+from .views import ProjectViewSet, RegisterUserView, UserDetailView, TaskListCreateView, TaskDetailView, CommentListCreateView, UserListView, CommentDetailView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
@@ -18,6 +18,7 @@ urlpatterns = [
     path('users/register/', RegisterUserView.as_view()),
     path('users/login/', TokenObtainPairView.as_view()),   # login returns view
     path('users/<int:pk>/', UserDetailView.as_view()),
+    path('users/', UserListView.as_view()),
 
     # Project CRUD via router
     path('', include(router.urls)),
@@ -31,14 +32,15 @@ urlpatterns = [
 
 
     # Comments (nested in tasks)
-    path('tasks/<int:task_id>/comments/', CommentViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('comments/<int:pk>/', CommentViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'}))
+    path('tasks/<int:task_id>/comments/', CommentListCreateView.as_view()),
+    path('comments/<int:pk>/', CommentDetailView.as_view()),
 
 ]
 
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework import permissions
 
 
 schema_view = get_schema_view(
@@ -47,7 +49,8 @@ schema_view = get_schema_view(
         default_version="v1",
         description= "API docs for project management tool",
     ),
-    public=True
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 

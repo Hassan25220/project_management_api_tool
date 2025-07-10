@@ -41,11 +41,18 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+        extra_kwargs = {
+            'project': {'read_only': True}
+        }
 
 class CommnetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+        extra_kwargs = {
+            'task': {'read_only': True},
+            'user': {'read_only': True}
+        }
 
 
         

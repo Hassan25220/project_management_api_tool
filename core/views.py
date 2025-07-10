@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics, permissions
 from .models import User, Project, ProjectMember, Task, Comment
-from .serializers import UserSerializer, RegisterSerializer, ProjectSerializer, ProjectMemberSerializer, TaskSerializer, CommnetSerializer
+from .serializers import UserSerializer, RegisterSerializer, ProjectSerializer, TaskSerializer, CommnetSerializer
 
 
 
@@ -22,7 +22,10 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 # Project CRUD using Viewset
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -68,18 +71,20 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-
-
-
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommnetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_querset(self):
+    def get_queryset(self):
         task_id = self.kwargs['task_id']
         return Comment.objects.filter(task_id=task_id)
 
-    def perform_create(self, seializer):
+    def perform_create(self, serializer):
         task_id = self.kwargs['task_id']
         task = Task.objects.get(id=task_id)
-        seializer.save(task=task, user=self.request.user)
+        serializer.save(task=task, user=self.request.user)
+
+class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommnetSerializer
+    permission_classes = [permissions.IsAuthenticated]
