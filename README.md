@@ -1,10 +1,3 @@
-✅ **Perfect!**
-Chalo tumhara **`README.md`** complete kar dete hain — **Swagger setup + JWT usage + example endpoints** ke sath.
-Neeche ready-to-copy version de raha hoon:
-
----
-
-````md
 # Project Management API 🚀
 
 This is a RESTful API built with **Django** & **Django REST Framework**.  
@@ -24,8 +17,8 @@ It provides core project management features: user registration, authentication,
 
 1️⃣ **Clone the repository**
 ```bash
-git clone <your-repo-url>
-cd <your-project-folder>
+git clone "https://github.com/Hassan25220/project_management_api_tool.git"
+
 ````
 
 2️⃣ **Create & activate virtual environment**
@@ -190,5 +183,4 @@ MIT — Use freely & build more 🚀
 ---
 
 ✅ **Copy this and replace your current README.md.**  
-Agar chaho to mai `requirements.txt` sample bhi bana du ya badge/icons bhi add kar du — bas batao!
 ```
