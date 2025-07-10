@@ -182,5 +182,4 @@ MIT — Use freely & build more 🚀
 
 ---
 
-✅ **Copy this and replace your current README.md.**  
 ```
